@@ -44,6 +44,10 @@ class Project:
     def max_score(self, today: int) -> int:
         return max(self.current_score(today) - self.duration, 0)
 
+    @classmethod
+    def dummy_project(cls, name) -> "Project":
+        return cls(name, 0, 0, 0, tuple())
+
 
 @dataclass(frozen=True)
 class ProjectTeam:
@@ -51,5 +55,13 @@ class ProjectTeam:
     started: int
     team: frozenset[Contributor]
 
-    def is_done(self, today: int) -> bool:
+    def can_close(self, today: int) -> bool:
         return self.project.duration + (self.started - today) <= 0
+
+    @classmethod
+    def dummy_team(cls, name: str, names: list[str]) -> "ProjectTeam":
+        return cls(
+            Project.dummy_project(name),
+            0,
+            frozenset(Contributor(c_name, defaultdict(int)) for c_name in names),
+        )

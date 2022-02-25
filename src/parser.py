@@ -2,11 +2,11 @@ from collections import defaultdict
 from pathlib import Path
 from typing import IO
 
-from consts import OUT_PATH, RSC_PATH, files
+from consts import RSC_PATH, files
 from models import Contributor, Project, Role
 
 
-def read_challenge_file(filename: str):
+def read_challenge_file(filename: str) -> tuple[list[Contributor], list[Project]]:
     return read_file(RSC_PATH / f"{filename}.in.txt")
 
 
