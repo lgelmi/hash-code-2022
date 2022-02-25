@@ -14,9 +14,7 @@ def read_file(file: Path) -> tuple[list[Contributor], list[Project]]:
     with file.open() as content:
         contr_n, proj_n = map(int, content.readline().split(" "))
         contrs = [read_contributor(content) for _ in range(contr_n)]
-        print(*contrs, sep="\n")
         projs = [read_projects(content) for _ in range(contr_n)]
-        print(*projs, sep="\n")
     return contrs, projs
 
 
@@ -50,4 +48,5 @@ def read_role(content: IO) -> Role:
 
 
 if __name__ == "__main__":
-    read_challenge_file(files[0])
+    contrs, projs = read_challenge_file(files[0])
+    print(*contrs, *projs, sep="\n")
