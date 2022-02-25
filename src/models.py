@@ -89,8 +89,8 @@ class Engine:
     def work(self, state: State) -> State:
         pass
 
-    def assign(self, state: State) -> State:
+    def assign(self, state: State, projects: list[Project]) -> State:
         pass
 
-    def prioritize(self, state: State) -> State:
+    def prioritize(self, state: State) -> tuple[State, list[Project]]:
         pass
