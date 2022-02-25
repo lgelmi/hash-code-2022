@@ -1,6 +1,8 @@
 from collections import defaultdict
 from dataclasses import dataclass
 
+from utils import compose
+
 
 @dataclass(frozen=True)
 class Role:
@@ -65,3 +67,30 @@ class ProjectTeam:
             0,
             frozenset(Contributor(c_name, defaultdict(int)) for c_name in names),
         )
+
+
+@dataclass(frozen=True)
+class State:
+    day: int
+    todo: frozenset(Project)
+    running: frozenset(ProjectTeam)
+    done: frozenset(ProjectTeam)
+    idle: frozenset(Contributor)
+
+
+class Engine:
+
+    scoring: callable
+    assigning: callable
+
+    def next_day(self, state: State) -> State:
+        return compose(self.prioritize, self.assign, self.work)(state)
+
+    def work(self, state: State) -> State:
+        pass
+
+    def assign(self, state: State) -> State:
+        pass
+
+    def prioritize(self, state: State) -> State:
+        pass
